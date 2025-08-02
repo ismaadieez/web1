@@ -52,7 +52,9 @@ def index():
                 'Mama t quiero',
                 'Papa t quiero',
                 'Hermana t quiero',
-                'Viva España'
+                'Viva España',
+                'Pedro Sanchez cabron',
+                '“Cuando creíamos que teníamos todas las respuestas, cambiaron todas las preguntas“ - Mario Benedetti',
 
             ]
             contenido = f"✒️ <em>{random.choice(frases2)}</em>"
