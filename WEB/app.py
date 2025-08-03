@@ -1,21 +1,41 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
-import random
 import os
+import smtplib
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 
-# Ruta del archivo donde se guardan sugerencias
 ARCHIVO_SUGERENCIAS = "sugerencias.txt"
 
+# ========= CONFIGURACIÓN DE EMAIL =========
+EMAIL_DESTINO = "weboficialismaadieez@gmail.com"
+EMAIL_REMITENTE = "ismasen1983@gmail.com"            # ← CAMBIA ESTO
+EMAIL_PASSWORD = "ismasen2006"               # ← CAMBIA ESTO
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
 
-# Función para obtener una sugerencia aleatoria
+def enviar_correo(sugerencia):
+    try:
+        msg = MIMEText(f"Nueva sugerencia:\n\n{sugerencia}")
+        msg['Subject'] = "Nueva sugerencia recibida"
+        msg['From'] = EMAIL_REMITENTE
+        msg['To'] = EMAIL_DESTINO
+
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_REMITENTE, EMAIL_PASSWORD)
+            server.send_message(msg)
+
+    except Exception as e:
+        print("Error enviando correo:", e)
+
 def obtener_sugerencia():
     if not os.path.exists(ARCHIVO_SUGERENCIAS):
         return "Aún no hay sugerencias. ¡Sé el primero!"
     with open(ARCHIVO_SUGERENCIAS, "r", encoding="utf-8") as f:
         lineas = [line.strip() for line in f if line.strip()]
-    return random.choice(lineas) if lineas else "Aún no hay sugerencias. ¡Sé el primero!"
+    return lineas[0] if lineas else "Aún no hay sugerencias. ¡Sé el primero!"
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -25,13 +45,12 @@ def index():
         if texto:
             with open(ARCHIVO_SUGERENCIAS, "a", encoding="utf-8") as f:
                 f.write(texto + "\n")
+            enviar_correo(texto)
         return redirect("/")
 
-    # Día actual
     hoy = datetime.now()
     dia = hoy.day
 
-    # Día especial: 31 → Instagram
     if dia == 31:
         contenido = '''
             📸 <strong>¡Sígueme en Instagram!</strong><br><br>
@@ -45,19 +64,19 @@ def index():
                 "“Podrán cortar todas las flores, pero no podrán detener la primavera.” — Neruda",
                 "“Vivo sin vivir en mí...” — Santa Teresa",
                 "“Tengo en mí todos los sueños del mundo.” — Pessoa",
+                "“No hay noche tan larga que no encuentre el día.” — Shakespeare"
             ]
-            contenido = f"✒️ <em>{random.choice(frases)}</em>"
+            contenido = f"✒️ <em>{frases[dia % len(frases)]}</em>"
         elif tipo_dia == 2:
             frases2 = [
                 'Mama t quiero',
                 'Papa t quiero',
                 'Hermana t quiero',
                 'Viva España',
-                'Pedro Sanchez cabron',
-                '“Cuando creíamos que teníamos todas las respuestas, cambiaron todas las preguntas“ - Mario Benedetti',
-
+                'Pedro Sánchez cabrón',
+                '“Cuando creíamos que teníamos todas las respuestas, cambiaron todas las preguntas.” — Benedetti',
             ]
-            contenido = f"✒️ <em>{random.choice(frases2)}</em>"
+            contenido = f"✒️ <em>{frases2[dia % len(frases2)]}</em>"
         elif tipo_dia == 3:
             contenido = f"📝 Sugerencia real enviada:<br>“{obtener_sugerencia()}”"
         elif tipo_dia == 4:
@@ -67,9 +86,9 @@ def index():
                 "https://i.imgur.com/kjYOd3O.jpg",
                 "https://i.imgur.com/QH1SY6L.jpg"
             ]
-            img = random.choice(imagenes)
+            img = imagenes[dia % len(imagenes)]
             contenido = f'<img src="{img}" alt="meme" style="max-width:100%; border-radius:10px;">'
-        elif tipo_dia == 0:
+        else:
             contenido = '''
             🎞️ <strong>Animación del día:</strong><br><br>
             <div style="width:100px;height:100px;background:red;animation: girar 2s linear infinite; border-radius:50%; margin:0 auto;"></div>
@@ -80,12 +99,9 @@ def index():
               }
             </style>
             '''
-        else:
-            contenido = "✨ Algo nuevo aparecerá pronto..."
 
     return render_template("index.html", contenido=contenido)
 
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host="0.0.0.0", port=port)

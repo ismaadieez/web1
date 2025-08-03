@@ -65,7 +65,7 @@
       padding: 15px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 250px;
+      width: 280px;
     }
 
     #formulario textarea {
@@ -109,11 +109,14 @@
 
   <div id="formulario">
     <form method="POST">
-      <p style="margin-top:0;">¿Qué debería salir aquí?</p>
-      <textarea name="sugerencia" rows="3" required></textarea>
+      <h3 style="margin-top:0;color:#333;">✨ Tu sugerencia</h3>
+      <p style="font-size:14px;color:#555;margin-bottom:10px;">
+        ¿Qué te gustaría ver en esta página? Escríbelo y podrías verlo en unos días 👇
+      </p>
+      <textarea name="sugerencia" rows="4" required placeholder="Escribe aquí tu idea..." style="padding:8px; border:1px solid #ccc; border-radius:8px;"></textarea>
       <br>
-      <button type="submit">Enviar</button>
-      <button type="button" onclick="cerrarFormulario()">Cerrar</button>
+      <button type="submit">📩 Enviar</button>
+      <button type="button" onclick="cerrarFormulario()">❌ Cerrar</button>
     </form>
   </div>
 
