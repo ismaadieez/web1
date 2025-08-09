@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Contacto</h2>
+<p>Empresa: <strong>DisetekSolution</strong></p>
+<p>Email: <strong>{{ company.email }}</strong> · Tel: <strong>{{ company.phone }}</strong></p>
+
+<h3>Escríbenos</h3>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <label>Nombre</label> {{ form.name() }}
+  <label>Email</label> {{ form.email() }}
+  <label>Teléfono</label> {{ form.phone() }}
+  <label>Mensaje</label> {{ form.message(rows=6) }}
+  <div><button class="btn" type="submit">Enviar</button></div>
+</form>
+{% endblock %}

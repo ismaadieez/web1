@@ -1,0 +1,49 @@
+:root{
+  --accent:#0066cc;
+  --muted:#555;
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --radius:12px;
+}
+
+*{box-sizing:border-box;font-family:Inter,system-ui,Arial,Helvetica,sans-serif}
+body{margin:0;background:var(--bg);color:#222}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.site-header{background:linear-gradient(90deg,#ffffff, #f0f6ff);box-shadow:0 3px 10px rgba(10,10,20,0.06)}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+.brand-wrap{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:8px}
+.brand{margin:0;color:var(--accent);font-weight:700}
+.site-header nav a{margin-left:18px;text-decoration:none;color:var(--muted);font-weight:600}
+.hero{display:flex;gap:20px;align-items:center;padding:40px;background:linear-gradient(90deg,#eaf3ff, transparent);border-radius:14px}
+.hero-inner{flex:1}
+.hero h2{margin:0 0 8px;font-size:30px}
+.hero p{margin:0 0 16px;color:var(--muted)}
+.cta{display:inline-block;background:var(--accent);color:white;padding:10px 16px;border-radius:10px;text-decoration:none}
+.hero-img img{max-width:300px;border-radius:12px;box-shadow:0 6px 20px rgba(10,10,30,0.08)}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:18px}
+.card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 20px rgba(12,18,30,0.04)}
+.card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+.card h4{margin:10px 0 6px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.price{font-weight:700;margin-top:8px}
+.btn{display:inline-block;margin-top:10px;padding:8px 12px;border-radius:10px;background:#222;color:white;text-decoration:none}
+
+/* detail */
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.detail-left img{width:100%;border-radius:12px}
+form label{display:block;margin-top:10px;font-weight:600}
+form input, form textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:6px}
+.flashes .flash{padding:10px;border-radius:8px;margin-bottom:8px}
+.flash.success{background:#e6ffef;border:1px solid #baf0cb}
+
+/* footer */
+.site-footer{margin-top:40px;padding:20px;text-align:center;color:var(--muted)}
+
+/* responsive */
+@media (max-width:800px){
+  .hero{flex-direction:column}
+  .detail-grid{grid-template-columns:1fr}
+}
