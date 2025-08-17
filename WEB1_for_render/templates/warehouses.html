@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Almacenes disponibles</h2>
+<div class="cards">
+  {% for w in warehouses %}
+    <article class="card">
+      <img src="{{ url_for('static', filename=w.image) }}" alt="{{ w.name }}">
+      <h4>{{ w.name }}</h4>
+      <p>{{ w.location }}</p>
+      <p>{{ w.size_m2 }} m² · {{ w.price_per_month }} €/mes</p>
+      <a href="{{ url_for('warehouse_detail', wh_id=w.id) }}" class="btn">Reservar / Ver</a>
+    </article>
+  {% endfor %}
+</div>
+{% endblock %}

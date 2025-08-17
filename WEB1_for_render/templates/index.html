@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-inner">
+    <h2>¿Sin espacio en casa?</h2>
+    <p>En DisetekSolution te ofrecemos soluciones de almacenamiento flexibles y seguras. Reserva online tu trastero por meses o semanas.</p>
+    <a class="cta" href="{{ url_for('warehouses') }}">Ver almacenes disponibles</a>
+  </div>
+  <div class="hero-img">
+    <img src="{{ url_for('static', filename='img/hero.jpg') }}" alt="Almacenes">
+  </div>
+</section>
+
+<section class="featured">
+  <h3>Almacenes destacados</h3>
+  <div class="cards">
+    {% for w in featured %}
+      <article class="card">
+        <img src="{{ url_for('static', filename=w.image) }}" alt="{{ w.name }}">
+        <h4>{{ w.name }}</h4>
+        <p>{{ w.description }}</p>
+        <p class="price">{{ w.price_per_month }} €/mes</p>
+        <a href="{{ url_for('warehouse_detail', wh_id=w.id) }}" class="btn">Ver</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="about">
+  <h3>¿Cómo funciona?</h3>
+  <ol>
+    <li>Encuentra el tamaño que necesitas</li>
+    <li>Reserva online en segundos</li>
+    <li>Accede a tu trastero con seguridad</li>
+  </ol>
+</section>
+{% endblock %}
